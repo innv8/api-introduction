@@ -26,9 +26,20 @@ type Base struct {
 func (b *Base) StartRouter() {
 	b.Router = mux.NewRouter()
 
-	b.Router.HandleFunc("/", middleware.HeadersMiddleware(b.HomeController))
-	b.Router.HandleFunc("/members", middleware.HeadersMiddleware(b.MembersController)).Methods("GET", "POST")
-	b.Router.HandleFunc("/members-by-position", middleware.HeadersMiddleware(b.MembersByPostionController)).Methods("GET", "POST")
+	b.Router.
+		HandleFunc("/", middleware.HeadersMiddleware(b.HomeController))
+
+	b.Router.
+		HandleFunc("/members-by-position", middleware.HeadersMiddleware(b.MembersByPostionController)).
+		Methods("GET", "POST")
+
+	b.Router.
+		HandleFunc("/members", middleware.HeadersMiddleware(b.MembersController)).
+		Methods("GET")
+
+	b.Router.
+		HandleFunc("/members", b.CreateMemberController).
+		Methods("POST")
 
 }
 

@@ -32,3 +32,17 @@ type Member struct {
 	Modified    string `json:"modified,omitempty"` // if dealing with json, you can use omitempty to omit empty values
 	NextOfKin   string `json:"nextOfKin"`
 }
+
+/*
+When creating a new user, we will need to send the details of the user.
+We'll use the Member struct to be our guide.
+Our payload that will be sent to the api is as follows
+
+{
+	"name": "Habiba",
+	"parentsName": "Parent",
+	"phone": "43534544",
+	"position": 1,
+	"nextOfKin": "Denno"
+}
+*/

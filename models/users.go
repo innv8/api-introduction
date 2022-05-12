@@ -62,6 +62,26 @@ func GetUsers(db *sql.DB) (users []entities.User, err error) {
 		// 	 // and then the loop will end.
 		//  }
 
+		// BONUS
+		// Buffer
+		// A buffer is a type of storage that stores data and once the data is read, it disappears.
+		// in Go, its commonly used in storing client data in a web API and also the api response
+		// when you are coding a client.
+		// when dealing with buffers there are two ways of reading
+
+		var data interface{}
+		err = json.NewDecorder(buffer).Decode(&data)
+
+		// once you read from the buffer, the buffer will be nil
+
+		// another way of reading a buffer is in two steps
+
+		dataBytes, err = ioutil.Readall(buffer)
+
+		// if you now want to read the bytes into the data variable
+		// you can convert it
+		err = json.Unmarshal(dataBytes, &data)
+
 
 
 	for rows.Next() {
@@ -167,4 +187,20 @@ func FetchMembersByPosition(position int, db *sql.DB) (members []entities.Member
 
 	log.Printf("found %d members", len(members))
 	return
+}
+
+func CreateMember(member entities.Member, db *sql.DB) (err error) {
+	var query = "INSERT INTO members (name, parentsName, phone, position, nextOfKin) VALUES (?,?,?,?,?)"
+
+	row, err := db.Exec(query, member.Name, member.ParentsName, member.Phone, member.Position, member.NextOfKin)
+	if err != nil {
+		log.Printf("unable to create member because %v", err)
+		return err
+	}
+
+	// we can use row to get the primary key of the new member
+	primaryKey, _ := row.LastInsertId()
+	log.Printf("new member created with primary key %v", primaryKey)
+	return nil
+
 }

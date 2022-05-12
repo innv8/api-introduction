@@ -301,3 +301,5 @@ We will change the `GetUsers` to return members.
 
 Refer to `models/users.go`
 
+
+## Lesson 6 : Create a new member

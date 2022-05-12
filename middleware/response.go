@@ -19,6 +19,6 @@ func JSONResponse(w http.ResponseWriter, code int, data interface{}) {
 	}
 	responseJSON, _ := json.Marshal(response)
 	w.Header().Set("content-type", "application/json")
-	w.WriteHeader(200)
+	w.WriteHeader(code)
 	_, _ = w.Write(responseJSON)
 }
